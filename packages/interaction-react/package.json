@@ -1,0 +1,26 @@
+{
+  "name": "@pfx/interaction-react",
+  "version": "0.1.0",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@pfx/interaction-core": "workspace:*",
+    "@pfx/interaction-dom": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=18 <20"
+  }
+}
