@@ -14,12 +14,19 @@
     "declarationMap": true,
     "sourceMap": true,
     "composite": true,
-    "baseUrl": ".",
     "paths": {
-      "@pfx/interaction-core": ["packages/interaction-core/src/index.ts"],
-      "@pfx/interaction-dom": ["packages/interaction-dom/src/index.ts"],
-      "@pfx/interaction-react": ["packages/interaction-react/src/index.ts"],
-      "@pfx/interaction-testing": ["packages/interaction-testing/src/index.ts"]
+      "@pfx/interaction-core": [
+        "./packages/interaction-core/src/index.ts"
+      ],
+      "@pfx/interaction-dom": [
+        "./packages/interaction-dom/src/index.ts"
+      ],
+      "@pfx/interaction-react": [
+        "./packages/interaction-react/src/index.ts"
+      ],
+      "@pfx/interaction-testing": [
+        "./packages/interaction-testing/src/index.ts"
+      ]
     }
   }
 }
