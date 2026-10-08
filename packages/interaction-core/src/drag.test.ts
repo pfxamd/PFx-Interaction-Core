@@ -77,3 +77,26 @@ describe('drag lifecycle edge cases', () => {
     expect(() => new DragRecognizer({ activationDistance: Number.POSITIVE_INFINITY })).toThrow(RangeError);
   });
 });
+
+describe('device-independent pointer samples', () => {
+  it.each(['touch', 'pen'] as const)('handles %s drag and cancellation', (pointerType) => {
+    const drag = new DragRecognizer({ activationDistance: 3 });
+    const touchDown = { ...sample('down', 0, 0), pointerType };
+    expect(drag.handle(touchDown)?.phase).toBe('possible');
+    const active = drag.handle({ ...sample('move', 12, 10), pointerType });
+    expect(active?.phase).toBe('start');
+    expect(active?.pointerType).toBe(pointerType);
+    expect(active?.offset.x).toBe(12);
+    expect(drag.handle({ ...sample('cancel', 12, 20), pointerType })?.phase).toBe('cancel');
+    expect(drag.handle({ ...sample('move', 15, 30), pointerType })).toBeNull();
+  });
+
+  it('does not confuse a secondary input with the active pointer', () => {
+    const drag = new DragRecognizer();
+    expect(drag.handle({ ...sample('down', 0, 0), pointerId: 1, pointerType: 'mouse' })?.phase).toBe('start');
+    expect(drag.handle({ ...sample('down', 10, 1), pointerId: 2, pointerType: 'touch' })).toBeNull();
+    expect(drag.handle({ ...sample('cancel', 10, 2), pointerId: 2, pointerType: 'touch' })).toBeNull();
+    expect(drag.handle({ ...sample('move', 7, 10), pointerId: 1, pointerType: 'mouse' })?.phase).toBe('update');
+    expect(drag.handle({ ...sample('up', 7, 20), pointerId: 1, pointerType: 'mouse' })?.phase).toBe('end');
+  });
+});

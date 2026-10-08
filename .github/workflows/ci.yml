@@ -2,7 +2,7 @@ name: CI
 
 "on":
   push:
-    branches: [main, "release/**"]
+    branches: [main, "release/**", "chore/reproducible-prerelease"]
   pull_request:
 
 permissions:
@@ -20,13 +20,25 @@ jobs:
           package-manager-cache: false
       - run: corepack enable
       - run: corepack prepare pnpm@12.9.1 --activate
-      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm install --frozen-lockfile
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm build
       - run: pnpm api:extract
       - run: pnpm check:packages
+      - name: Validate packaged distribution
+        run: |
+          mkdir -p release-assets
+          for package in interaction-core interaction-dom interaction-react interaction-testing; do
+            (cd "packages/$package" && pnpm pack --pack-destination ../../release-assets)
+          done
+          for archive in release-assets/*.tgz; do
+            tar -tzf "$archive" > "$archive.contents"
+            grep -Fxq 'package/LICENSE' "$archive.contents"
+            grep -Fxq 'package/NOTICE' "$archive.contents"
+            grep -Fxq 'package/dist/index.mjs' "$archive.contents"
+          done
       - run: pnpm exec playwright install --with-deps chromium firefox webkit
       - run: pnpm test:e2e
 
@@ -38,14 +50,34 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v7
-      - name: Publish one-time GitHub prerelease
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          package-manager-cache: false
+      - run: corepack enable
+      - run: corepack prepare pnpm@12.9.1 --activate
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - name: Build release archives
+        run: |
+          mkdir -p release-assets
+          for package in interaction-core interaction-dom interaction-react interaction-testing; do
+            (cd "packages/$package" && pnpm pack --pack-destination ../../release-assets)
+          done
+          for archive in release-assets/*.tgz; do
+            tar -tzf "$archive" | grep -q '^package/LICENSE
+            tar -tzf "$archive" | grep -q '^package/NOTICE
+            tar -tzf "$archive" | grep -q '^package/dist/index.mjs
+          done
+          (cd release-assets && sha256sum ./*.tgz > SHA256SUMS.txt)
+      - name: Publish verified GitHub prerelease
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if gh release view v0.1.0-beta.1 >/dev/null 2>&1; then
-            echo "Already released"
+          if gh release view v0.1.0-beta.2 >/dev/null 2>&1; then
+            echo "Release already exists"
             exit 0
           fi
-          gh release create v0.1.0-beta.1 --target "$GITHUB_SHA" \
-            --title "PFx Interaction Core v0.1.0-beta.1" \
+          gh release create v0.1.0-beta.2 release-assets/*.tgz release-assets/SHA256SUMS.txt \
+            --target "$GITHUB_SHA" --title "PFx Interaction Core v0.1.0-beta.2" \
             --notes-file RELEASE_NOTES.md --prerelease

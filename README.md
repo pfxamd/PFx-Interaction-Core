@@ -5,7 +5,7 @@
 
 Headless, framework-independent interaction primitives for building responsive, accessible controls and motion.
 
-> **Status:** v0.1.0 beta foundation. Public APIs may change. Packages are **not published on npm** yet.
+> **Status:** v0.1.0-beta.2 (GitHub prerelease). Public APIs may change. Packages are **not published on npm** yet.
 
 ## Packages
 
@@ -24,7 +24,7 @@ Requires Node.js 22+ and pnpm 12.9.1.
 ```bash
 corepack enable
 corepack prepare pnpm@12.9.1 --activate
-pnpm install
+pnpm install --frozen-lockfile
 pnpm lint
 pnpm typecheck
 pnpm test
@@ -73,6 +73,15 @@ if (element) {
   void binding;
 }
 ```
+
+## Downloadable GitHub release archives
+
+The GitHub prerelease includes source downloads and four prebuilt `.tgz`
+packages, accompanied by `SHA256SUMS.txt`. These are **not npm registry releases**.
+For repository development, the pnpm workspace remains the recommended way
+to run all examples. Applications outside the workspace must supply all
+required local packages explicitly; optional DOM and React layers depend
+on the core package.
 
 ## Design notes
 
