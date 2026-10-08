@@ -31,9 +31,7 @@ jobs:
       - run: corepack enable
       - run: corepack prepare pnpm@12.9.1 --activate
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter @pfx/playground build
-        env:
-          GITHUB_PAGES: "true"
+      - run: pnpm --filter @pfx/playground build --mode pages
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:

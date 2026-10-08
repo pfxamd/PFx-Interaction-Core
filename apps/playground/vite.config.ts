@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
-  // Local development and Playwright use /. GitHub Pages serves under the repository path.
-  base: process.env.GITHUB_PAGES === 'true' ? '/PFx-Interaction-Core/' : '/',
-});
+  // Keep local previews at / and publish the site at the repository subpath.
+  base: mode === 'pages' ? '/PFx-Interaction-Core/' : '/',
+}));
