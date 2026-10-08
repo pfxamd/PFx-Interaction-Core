@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.0-beta.2] - 2026-10-08
+
+- Verified public GitHub release workflow with compiled package archives.
+- Committed the pnpm workspace lockfile and enabled frozen installs in CI.
+- Added Apache license and notice to each downloadable package.
+- Expanded touch, pen and multipointer drag tests.
+- Avoided retaining positions from inactive pointer-move events.
+- Published artifacts with SHA-256 checksums.
+
+
 ## [0.1.0-beta.1] - 2026-10-08
 
 First preview release of the headless interaction foundation.

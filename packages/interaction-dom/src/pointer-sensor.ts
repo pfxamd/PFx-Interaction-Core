@@ -28,7 +28,11 @@ export function bindPointerSensor(element: HTMLElement, options: PointerSensorOp
     if (options.preventDefault) event.preventDefault();
     const previous = previousPositions.get(event.pointerId) ?? null;
     const sample = pointerSample(event, phase, previous, options.mapPosition);
-    if (phase === 'down' || phase === 'move') previousPositions.set(event.pointerId, sample.position);
+    // Only active pointers need a position history. Passive pointer movement
+    // should not leave stale IDs in the map or accumulate retained state.
+    if (phase === 'down' || (phase === 'move' && previousPositions.has(event.pointerId))) {
+      previousPositions.set(event.pointerId, sample.position);
+    }
     else previousPositions.delete(event.pointerId);
     options.onSample(sample, event);
   };
