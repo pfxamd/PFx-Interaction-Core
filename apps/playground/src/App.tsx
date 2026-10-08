@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import {
   animateSpring,
   applyPrecision,
@@ -43,8 +43,8 @@ function HorizontalSlider() {
   });
 
   return (
-    <section className="card">
-      <header><h2>Axis + Precision</h2><output ref={outputRef}>0.500</output></header>
+    <section className="card card-axis">
+      <header><div className="card-heading"><span className="card-index">01 / SCALAR INPUT</span><h2>Axis + Precision</h2></div><output ref={outputRef}>0.500</output></header>
       <div
         ref={trackRef}
         className="slider"
@@ -96,8 +96,8 @@ function VerticalSlider() {
   });
 
   return (
-    <section className="card compact-card">
-      <header><h2>Vertical Axis</h2><span>1D</span></header>
+    <section className="card card-vertical">
+      <header><div className="card-heading"><span className="card-index">02 / AXIS CONTROL</span><h2>Vertical Axis</h2></div><span>1D</span></header>
       <div
         ref={trackRef}
         className="vertical-slider"
@@ -134,8 +134,8 @@ function FreeDrag() {
   });
 
   return (
-    <section className="card">
-      <header><h2>Free Drag</h2><span>2D Delta</span></header>
+    <section className="card card-free">
+      <header><div className="card-heading"><span className="card-index">03 / SPATIAL INPUT</span><h2>Free Drag</h2></div><span>2D Delta</span></header>
       <div ref={zoneRef} className="free-zone">
         <div ref={objectRef} className="free-object">MOVE</div>
       </div>
@@ -157,8 +157,8 @@ function InputProbe() {
   });
 
   return (
-    <section className="card compact-card">
-      <header><h2>Input Probe</h2><output ref={outputRef}>idle</output></header>
+    <section className="card card-probe">
+      <header><div className="card-heading"><span className="card-index">04 / DEVICE SIGNAL</span><h2>Input Probe</h2></div><output ref={outputRef}>idle</output></header>
       <div ref={probeRef} className="probe-zone">Touch / Pen / Mouse</div>
       <p>Verifies unified pointer input while preserving device characteristics.</p>
     </section>
@@ -189,8 +189,8 @@ function XYPad() {
   });
 
   return (
-    <section className="card">
-      <header><h2>XY Control</h2><span>2D</span></header>
+    <section className="card card-xy">
+      <header><div className="card-heading"><span className="card-index">05 / VECTOR CONTROL</span><h2>XY Control</h2></div><span>2D</span></header>
       <div ref={padRef} className="xy-pad" data-testid="xy-pad">
         <div ref={handleRef} className="xy-handle" style={{ left: '50%', top: '50%' }} />
       </div>
@@ -220,8 +220,8 @@ function Rotary() {
   });
 
   return (
-    <section className="card">
-      <header><h2>Rotary + Detents</h2><span>0..360</span></header>
+    <section className="card card-rotary">
+      <header><div className="card-heading"><span className="card-index">06 / ANGULAR INPUT</span><h2>Rotary + Detents</h2></div><span>0..360</span></header>
       <div ref={controlRef} className="rotary-wrap" role="slider" tabIndex={0} aria-valuemin={0} aria-valuemax={359} aria-valuenow={0}>
         <div ref={dialRef} className="rotary"><i /></div>
       </div>
@@ -281,8 +281,8 @@ function SpringDrag() {
   });
 
   return (
-    <section className="card">
-      <header><h2>Spring Return</h2><span>Physics</span></header>
+    <section className="card card-spring">
+      <header><div className="card-heading"><span className="card-index">07 / MOTION PHYSICS</span><h2>Spring Return</h2></div><span>Physics</span></header>
       <div ref={zoneRef} className="spring-zone">
         <div ref={objectRef} className="spring-object">PFx</div>
       </div>
@@ -312,8 +312,8 @@ function SnapControl() {
   });
 
   return (
-    <section className="card">
-      <header><h2>Snap Points</h2><span>Modifier</span></header>
+    <section className="card card-snap">
+      <header><div className="card-heading"><span className="card-index">08 / CONSTRAINTS</span><h2>Snap Points</h2></div><span>Modifier</span></header>
       <div ref={trackRef} className="slider snap-slider">
         {[0, 25, 50, 75, 100].map((value) => <i key={value} style={{ left: `${value}%` }} />)}
         <div ref={thumbRef} className="thumb" style={{ left: '50%' }} />
@@ -324,28 +324,88 @@ function SnapControl() {
 }
 
 export function App() {
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+
   return (
-    <main>
-      <header className="hero">
-        <div>
-          <span className="eyebrow">PFx Interaction Core / v0.1</span>
-          <h1>Interaction Playground</h1>
-        </div>
-        <p>Pointer, keyboard, constraints, precision and physics in one headless interaction foundation.</p>
-      </header>
-      <div className="grid">
-        <HorizontalSlider />
-        <VerticalSlider />
-        <XYPad />
-        <Rotary />
-        <FreeDrag />
-        <SpringDrag />
-        <SnapControl />
-        <InputProbe />
+    <div className="app-shell" data-theme={theme}>
+      <a className="skip-link" href="#experiments">Skip to experiments</a>
+      <div className="site-frame">
+        <nav className="topbar" aria-label="Site navigation">
+          <a className="brand" href="https://pfxamd.com/" aria-label="PFxamd home">
+            <img className="brand-symbol" src={`${import.meta.env.BASE_URL}logo.svg`} alt="" />
+            <span className="brand-wordmark">PFx<span>amd</span></span>
+          </a>
+          <div className="topbar-center"><span className="topbar-square" aria-hidden="true" /> INTERACTION CORE <span className="nav-divider">/</span> PLAYGROUND</div>
+          <div className="topbar-actions">
+            <button className="theme-button" type="button" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'} title="Toggle color theme">
+              <span className="theme-icon" aria-hidden="true">{theme === 'dark' ? '◐' : '◑'}</span>
+              <span>{theme === 'dark' ? 'LIGHT' : 'DARK'} MODE</span>
+            </button>
+            <a className="topbar-repo" href="https://github.com/pfxamd/PFx-Interaction-Core" target="_blank" rel="noopener noreferrer">SOURCE <span aria-hidden="true">↗</span></a>
+          </div>
+        </nav>
+        <main className="workspace">
+          <section className="hero" aria-labelledby="playground-heading">
+            <div className="hero-copy">
+              <span className="eyebrow"><i className="indicator" aria-hidden="true" /> OPEN SOURCE / EXPERIMENT 001</span>
+              <h1 id="playground-heading">Interaction <span>Playground</span><span className="hero-stop" aria-hidden="true">.</span></h1>
+              <p className="hero-subtitle">An interactive field guide to movement, precision, and control. Explore the building blocks behind responsive interfaces.</p>
+              <div className="hero-meta"><span><strong>08</strong> LIVE MODULES</span><span>POINTER + KEYBOARD</span><span>CORE v0.1.0</span></div>
+              <a className="hero-cta" href="#experiments">EXPLORE THE LAB <span aria-hidden="true">↓</span></a>
+            </div>
+            <div className="hero-diagram" aria-hidden="true">
+              <div className="diagram-axis diagram-x" />
+              <div className="diagram-axis diagram-y" />
+              <div className="diagram-ring diagram-ring-outer" />
+              <div className="diagram-ring diagram-ring-inner" />
+              <div className="diagram-path">
+                <svg viewBox="0 0 440 330" preserveAspectRatio="none"><path d="M42 255 C 90 248, 125 128, 174 180 S 267 272, 308 154 S 360 72, 404 86"/><circle cx="174" cy="180" r="5"/><circle cx="308" cy="154" r="5"/></svg>
+              </div>
+              <div className="diagram-center"><span className="diagram-aim" /><b>PFx</b></div>
+              <span className="diagram-coordinate coordinate-a">X: 0.742</span>
+              <span className="diagram-coordinate coordinate-b">Y: 0.318</span>
+              <span className="diagram-caption">SIGNAL SPACE / 02 AXES</span>
+              <span className="diagram-corner diagram-corner-tl" />
+              <span className="diagram-corner diagram-corner-br" />
+            </div>
+          </section>
+          <section className="lab-area" id="experiments" aria-labelledby="experiments-heading">
+            <div className="section-head">
+              <div>
+                <span className="section-overline">/ 01 — THE WORKBENCH</span>
+                <h2 id="experiments-heading">Test the mechanics<span aria-hidden="true">↘</span></h2>
+              </div>
+              <p>Everything below is real. Drag, tap, type, and experiment.</p>
+            </div>
+            <div className="grid">
+              <HorizontalSlider />
+              <VerticalSlider />
+              <XYPad />
+              <Rotary />
+              <FreeDrag />
+              <SpringDrag />
+              <SnapControl />
+              <InputProbe />
+            </div>
+          </section>
+          <section className="outro" aria-label="Explore the source">
+            <div>
+              <span className="section-overline">/ 02 — UNDER THE HOOD</span>
+              <h2>No magic.<br/><span>Just mechanics.</span></h2>
+              <p>A framework-independent core, browser sensors, and optional React bindings. Built to compose, not to dictate.</p>
+            </div>
+            <div className="outro-actions">
+              <a href="https://github.com/pfxamd/PFx-Interaction-Core" target="_blank" rel="noopener noreferrer">EXPLORE SOURCE <span aria-hidden="true">↗</span></a>
+              <a href="https://github.com/pfxamd/PFx-Interaction-Core/releases/tag/v0.1.0" target="_blank" rel="noopener noreferrer">GET v0.1.0 <span aria-hidden="true">↗</span></a>
+            </div>
+          </section>
+        </main>
+        <footer className="footer">
+          <span>© PFxamd / INTERACTION CORE</span>
+          <div className="footer-inputs"><span>MOUSE</span><span>TOUCH</span><span>PEN</span><span>KEYBOARD</span></div>
+          <span>DESIGNED FOR REAL INPUT <i aria-hidden="true">●</i></span>
+        </footer>
       </div>
-      <footer>
-        <span>Mouse</span><span>Touch</span><span>Pen</span><span>Keyboard</span><span>60fps-oriented</span>
-      </footer>
-    </main>
+    </div>
   );
 }

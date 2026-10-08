@@ -7,6 +7,10 @@ Headless, framework-independent interaction primitives for building responsive, 
 
 > **Status:** v0.1.0 (GitHub release). This is a 0.x release; public APIs may change. Packages are **not published on npm** yet.
 
+## Interactive Playground
+
+Explore the [live interaction playground](https://pfxamd.github.io/PFx-Interaction-Core/) to try drag, axes, snapping, input sensors, and physics in the browser. The [GitHub Pages deployment workflow](./.github/workflows/pages.yml) publishes the playground independently of versioned core releases.
+
 ## Packages
 
 | Package | Purpose |
