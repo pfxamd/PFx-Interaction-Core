@@ -27,6 +27,18 @@ jobs:
       - run: pnpm build
       - run: pnpm api:extract
       - run: pnpm check:packages
+      - name: Validate packaged distribution
+        run: |
+          mkdir -p release-assets
+          for package in interaction-core interaction-dom interaction-react interaction-testing; do
+            (cd "packages/$package" && pnpm pack --pack-destination ../../release-assets)
+          done
+          for archive in release-assets/*.tgz; do
+            tar -tzf "$archive" > "$archive.contents"
+            grep -Fxq 'package/LICENSE' "$archive.contents"
+            grep -Fxq 'package/NOTICE' "$archive.contents"
+            grep -Fxq 'package/dist/index.mjs' "$archive.contents"
+          done
       - run: pnpm exec playwright install --with-deps chromium firefox webkit
       - run: pnpm test:e2e
 
