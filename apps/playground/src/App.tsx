@@ -359,7 +359,7 @@ export function App() {
               <div className="diagram-ring diagram-ring-outer" />
               <div className="diagram-ring diagram-ring-inner" />
               <div className="diagram-path">
-                <svg viewBox="0 0 440 330" preserveAspectRatio="none"><title>Signal trajectory</title><path d="M42 255 C 90 248, 125 128, 174 180 S 267 272, 308 154 S 360 72, 404 86"/><circle cx="174" cy="180" r="5"/><circle cx="308" cy="154" r="5"/></svg>
+                <svg role="img" aria-label="Signal trajectory" viewBox="0 0 440 330" preserveAspectRatio="none"><title>Signal trajectory</title><path d="M42 255 C 90 248, 125 128, 174 180 S 267 272, 308 154 S 360 72, 404 86"/><circle cx="174" cy="180" r="5"/><circle cx="308" cy="154" r="5"/></svg>
               </div>
               <div className="diagram-center"><span className="diagram-aim" /><b>PFx</b></div>
               <span className="diagram-coordinate coordinate-a">X: 0.742</span>
