@@ -1,14 +1,19 @@
-# PFx Interaction Core v0.1.0-beta.2
+# PFx Interaction Core v0.1.0
 
-Public GitHub prerelease of the framework-independent interaction foundation.
+First standard GitHub Release of PFx Interaction Core, a headless interaction infrastructure for PFx projects.
 
-- Four separately packaged builds: core, DOM, React, and deterministic testing.
-- Apache-2.0 license and copyright notices included with every archive.
-- Reproducible dependency installation from a committed pnpm lockfile.
-- Pointer, keyboard, wheel, drag, press, constraints, spring, and inertia primitives.
-- Additional mouse, touch, pen, multipointer, cancellation, and motion-lifecycle tests.
-- Chromium, Firefox and WebKit end-to-end validation.
-- Package archives with SHA-256 checksums.
+## Included packages
+- `@pfx/interaction-core`: framework-independent gestures, values, constraints and physics.
+- `@pfx/interaction-dom`: native pointer, keyboard, wheel and DOM bindings.
+- `@pfx/interaction-react`: React integration hooks.
+- `@pfx/interaction-testing`: deterministic input and scheduler helpers.
 
-**Experimental:** public APIs can change prior to v1.0.0.
-These packages have **not** been published to the npm registry.
+The four versioned `.tgz` packages, SHA256SUMS.txt and GitHub source archives are provided as downloadable release assets.
+
+## Quality and licensing
+- Automated lint, type-checks, unit tests, package validation, and API extraction.
+- End-to-end tests across Chromium, Firefox and WebKit.
+- Apache-2.0 licensed, with LICENSE and NOTICE in each package.
+- Reproducible dependency installation using the committed pnpm lockfile.
+
+This is a standard **GitHub Release**, not a prerelease. Version 0.x does **not** promise a frozen API. Packages are not published to npm.
