@@ -65,9 +65,10 @@ jobs:
             (cd "packages/$package" && pnpm pack --pack-destination ../../release-assets)
           done
           for archive in release-assets/*.tgz; do
-            tar -tzf "$archive" | grep -q '^package/LICENSE
-            tar -tzf "$archive" | grep -q '^package/NOTICE
-            tar -tzf "$archive" | grep -q '^package/dist/index.mjs
+            tar -tzf "$archive" > "$archive.contents"
+            grep -Fxq 'package/LICENSE' "$archive.contents"
+            grep -Fxq 'package/NOTICE' "$archive.contents"
+            grep -Fxq 'package/dist/index.mjs' "$archive.contents"
           done
           (cd release-assets && sha256sum ./*.tgz > SHA256SUMS.txt)
       - name: Publish verified GitHub prerelease
