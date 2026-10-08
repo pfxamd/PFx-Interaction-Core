@@ -36,6 +36,8 @@ export function bindDrag(element: HTMLElement, options: DragBindingOptions): Dom
   return {
     destroy() {
       unsubscribeEscape();
+      // Reset the active recognizer, without emitting callbacks during unmount.
+      recognizer.cancel();
       pointerBinding.destroy();
     },
   };

@@ -47,3 +47,33 @@ describe('DragRecognizer', () => {
     expect(drag.handle(sample('move', 8, 20))).toBeNull();
   });
 });
+
+describe('drag lifecycle edge cases', () => {
+  it('ignores a second pointer while the first pointer owns the session', () => {
+    const drag = new DragRecognizer();
+    expect(drag.handle(sample('down', 0, 0))?.phase).toBe('start');
+    const secondary = { ...sample('down', 40, 1), pointerId: 2 };
+    expect(drag.handle(secondary)).toBeNull();
+    expect(drag.handle({ ...secondary, phase: 'move' })).toBeNull();
+    expect(drag.handle({ ...secondary, phase: 'up' })).toBeNull();
+    expect(drag.handle(sample('move', 12, 16))?.offset.x).toBe(12);
+    expect(drag.handle(sample('up', 12, 32))?.phase).toBe('end');
+  });
+
+  it('resets a pending gesture released before activation', () => {
+    const drag = new DragRecognizer({ activationDistance: 10 });
+    expect(drag.handle(sample('down', 0, 0))?.phase).toBe('possible');
+    expect(drag.handle(sample('move', 4, 10))?.phase).toBe('possible');
+    expect(drag.handle(sample('up', 4, 20))?.phase).toBe('cancel');
+    expect(drag.handle(sample('move', 6, 30))).toBeNull();
+    expect(drag.handle(sample('down', 2, 40))?.phase).toBe('possible');
+    expect(drag.handle(sample('move', 20, 50))?.phase).toBe('start');
+    expect(drag.handle(sample('cancel', 20, 60))?.phase).toBe('cancel');
+  });
+
+  it('rejects invalid activation distance', () => {
+    expect(() => new DragRecognizer({ activationDistance: -1 })).toThrow(RangeError);
+    expect(() => new DragRecognizer({ activationDistance: Number.NaN })).toThrow(RangeError);
+    expect(() => new DragRecognizer({ activationDistance: Number.POSITIVE_INFINITY })).toThrow(RangeError);
+  });
+});

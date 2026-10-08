@@ -65,6 +65,11 @@ export function bindPointerSensor(element: HTMLElement, options: PointerSensorOp
       element.removeEventListener('pointerup', onUp);
       element.removeEventListener('pointercancel', onCancel);
       element.removeEventListener('lostpointercapture', onLostCapture);
+      // Release captured pointers before clearing state. Listeners are already removed,
+      // so teardown never forwards unexpected cancel events to consumers.
+      for (const pointerId of previousPositions.keys()) {
+        if (element.hasPointerCapture(pointerId)) element.releasePointerCapture(pointerId);
+      }
       previousPositions.clear();
       if (shouldManageTouchAction) element.style.touchAction = oldTouchAction;
     },

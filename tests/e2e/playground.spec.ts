@@ -35,3 +35,20 @@ test('pointer drag changes the slider value', async ({ page }) => {
   const value = Number(await slider.getAttribute('aria-valuenow'));
   expect(value).toBeGreaterThan(50);
 });
+
+test('Escape cancels pointer drag without applying further movement', async ({ page }) => {
+  await page.goto('/');
+  const slider = page.getByTestId('slider');
+  const box = await slider.boundingBox();
+  expect(box).not.toBeNull();
+  if (!box) return;
+  const y = box.y + box.height / 2;
+  await page.mouse.move(box.x + box.width / 2, y);
+  await page.mouse.down();
+  await page.mouse.move(box.x + box.width * 0.65, y);
+  const beforeEscape = await slider.getAttribute('aria-valuenow');
+  await page.keyboard.press('Escape');
+  await page.mouse.move(box.x + box.width * 0.9, y);
+  await page.mouse.up();
+  expect(await slider.getAttribute('aria-valuenow')).toBe(beforeEscape);
+});
