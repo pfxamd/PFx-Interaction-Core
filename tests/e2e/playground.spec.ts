@@ -22,6 +22,7 @@ test('keyboard changes the slider value', async ({ page }) => {
 test('pointer drag changes the slider value', async ({ page }) => {
   await page.goto('/');
   const slider = page.getByTestId('slider');
+  await slider.scrollIntoViewIfNeeded();
   const box = await slider.boundingBox();
   expect(box).not.toBeNull();
   if (!box) return;
@@ -39,6 +40,7 @@ test('pointer drag changes the slider value', async ({ page }) => {
 test('Escape cancels pointer drag without applying further movement', async ({ page }) => {
   await page.goto('/');
   const slider = page.getByTestId('slider');
+  await slider.scrollIntoViewIfNeeded();
   const box = await slider.boundingBox();
   expect(box).not.toBeNull();
   if (!box) return;
