@@ -9,7 +9,7 @@ Headless, framework-independent interaction primitives for building responsive, 
 
 ## Interactive Playground
 
-Explore the [live interaction playground](https://pfxamd.github.io/PFx-Interaction-Core/) to try drag, axes, snapping, input sensors, and physics in the browser. The [GitHub Pages deployment workflow](./.github/workflows/pages.yml) publishes the playground independently of versioned core releases.
+The visual experiments have moved to the [independent PFx Interaction Playground repository](https://github.com/pfxamd/pfx-interaction-playground). This repository contains only reusable interaction libraries and their verification tests.
 
 ## Packages
 
@@ -19,7 +19,6 @@ Explore the [live interaction playground](https://pfxamd.github.io/PFx-Interacti
 | `@pfx/interaction-dom` | Pointer events, keyboard, wheel, capture, coordinates and frame scheduling. |
 | `@pfx/interaction-react` | Optional React 18/19 hooks wrapping the underlying input bindings. |
 | `@pfx/interaction-testing` | Deterministic samples, sequences, and manual scheduling. |
-| `@pfx/playground` | Local playground, not a distributable package. |
 
 ## From source
 
@@ -35,9 +34,6 @@ pnpm test
 pnpm build
 pnpm api:extract
 pnpm check:packages
-pnpm exec playwright install chromium firefox webkit
-pnpm test:e2e
-pnpm --filter @pfx/playground dev
 ```
 
 ## Headless core example

@@ -39,8 +39,6 @@ jobs:
             grep -Fxq 'package/NOTICE' "$archive.contents"
             grep -Fxq 'package/dist/index.mjs' "$archive.contents"
           done
-      - run: pnpm exec playwright install --with-deps chromium firefox webkit
-      - run: pnpm test:e2e
 
   release:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
