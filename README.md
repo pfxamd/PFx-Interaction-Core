@@ -5,7 +5,7 @@
 
 Headless, framework-independent interaction primitives for building responsive, accessible controls and motion.
 
-> **Status:** v0.1.0-beta.2 (GitHub prerelease). Public APIs may change. Packages are **not published on npm** yet.
+> **Status:** v0.1.0 (GitHub release). This is a 0.x release; public APIs may change. Packages are **not published on npm** yet.
 
 ## Packages
 
@@ -76,7 +76,7 @@ if (element) {
 
 ## Downloadable GitHub release archives
 
-The GitHub prerelease includes source downloads and four prebuilt `.tgz`
+The GitHub release includes source downloads and four prebuilt `.tgz`
 packages, accompanied by `SHA256SUMS.txt`. These are **not npm registry releases**.
 For repository development, the pnpm workspace remains the recommended way
 to run all examples. Applications outside the workspace must supply all
@@ -91,7 +91,7 @@ on the core package.
 - Use correct focus and keyboard semantics for each UI widget. The core does not create fully accessible widgets automatically.
 - Browser compatibility must be validated on real browser engines, not inferred.
 - v0.1.0 is an experimental API; consult the changelog before updating.
-- The prerelease is hosted on GitHub only; packages are not available to install from the public npm registry.
+- The release is hosted on GitHub only; packages are not available to install from the public npm registry.
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md), [SECURITY.md](./SECURITY.md), [CHANGELOG.md](./CHANGELOG.md) and [NOTICE](./NOTICE).
 
