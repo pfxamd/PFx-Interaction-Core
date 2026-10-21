@@ -3,8 +3,8 @@
   "kind": "core",
   "product": "PFx Interaction Core",
   "channel": "Alpha",
-  "version": "0.1.0",
-  "label": "Alpha 0.1.0",
-  "commit": "eb46c201ad4ea2ad73b2bb1a976af63304254cc6",
-  "sourceDate": "2026-10-09T00:22:57+01:00"
+  "version": "0.1.1",
+  "label": "Alpha 0.1.1",
+  "commit": "aaa5cd5f662abe1bdf25aa09282c03616c21eac5",
+  "sourceDate": "2026-10-21T14:52:45+01:00"
 }
