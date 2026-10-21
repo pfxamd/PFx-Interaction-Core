@@ -14,10 +14,14 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v7
         with:
           node-version: 22
           package-manager-cache: false
+      - name: Resolve deterministic core version
+        run: node .pfx/release.mjs --sync
       - run: corepack enable
       - run: corepack prepare pnpm@12.9.1 --activate
       - run: pnpm install --frozen-lockfile
@@ -48,10 +52,14 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v7
         with:
           node-version: 22
           package-manager-cache: false
+      - name: Resolve deterministic core version
+        run: node .pfx/release.mjs --sync
       - run: corepack enable
       - run: corepack prepare pnpm@12.9.1 --activate
       - run: pnpm install --frozen-lockfile
@@ -73,10 +81,16 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if gh release view v0.1.0 >/dev/null 2>&1; then
+          VERSION="$(node -p "require('./packages/interaction-core/package.json').version")"
+          TAG="v$VERSION"
+          if gh release view "$TAG" >/dev/null 2>&1; then
             echo "Release already exists"
             exit 0
           fi
-          gh release create v0.1.0 release-assets/*.tgz release-assets/SHA256SUMS.txt \
-            --target "$GITHUB_SHA" --title "PFx Interaction Core v0.1.0" \
+          gh release create "$TAG" release-assets/*.tgz release-assets/SHA256SUMS.txt \
+            --target "$GITHUB_SHA" --title "PFx Interaction Core $TAG" \
             --notes-file RELEASE_NOTES.md --latest
+      - name: Record current core version and badge
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: node .pfx/release.mjs --publish
+

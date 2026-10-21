@@ -17,7 +17,8 @@
     "api:extract": "api-extractor run --local --typescript-compiler-folder ./node_modules/typescript --config packages/interaction-core/api-extractor.json",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "check": "biome check ."
+    "check": "biome check .",
+    "release:version": "node .pfx/release.mjs --sync"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",

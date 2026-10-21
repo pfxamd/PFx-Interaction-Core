@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "product": "PFx Interaction Core",
+  "channel": "Alpha",
+  "baseVersion": "0.1.0",
+  "baseline": "eb46c201ad4ea2ad73b2bb1a976af63304254cc6",
+  "sourcePaths": [
+    "src",
+    "packages",
+    "crates",
+    "bindings",
+    "tokens",
+    "config",
+    "schema",
+    "scripts",
+    "package.json",
+    "package-lock.json",
+    "pnpm-lock.yaml",
+    "Cargo.toml",
+    "Cargo.lock",
+    ".pfx",
+    ".github/workflows"
+  ],
+  "jsonVersions": [
+    "package.json",
+    "packages/interaction-core/package.json",
+    "packages/interaction-dom/package.json",
+    "packages/interaction-react/package.json",
+    "packages/interaction-testing/package.json"
+  ],
+  "cargoVersions": [],
+  "cargoNames": [],
+  "npmLocks": [],
+  "cargoLocks": []
+}

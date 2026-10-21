@@ -1,11 +1,13 @@
 # PFx Interaction Core
 
+[![Core version](./version-badge.svg)](./version.json)
+
 [![CI](https://github.com/pfxamd/PFx-Interaction-Core/actions/workflows/ci.yml/badge.svg)](https://github.com/pfxamd/PFx-Interaction-Core/actions/workflows/ci.yml)
 [![Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](./LICENSE)
 
 Headless, framework-independent interaction primitives for building responsive, accessible controls and motion.
 
-> **Status:** v0.1.0 (GitHub release). This is a 0.x release; public APIs may change. Packages are **not published on npm** yet.
+> **Status:** 0.x; the current source version is shown above. This is a 0.x release; public APIs may change. Packages are **not published on npm** yet.
 
 ## Interactive Playground
 
@@ -98,3 +100,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md), [SECURITY.md](./SECURITY.md), [CHANGEL
 ## License
 
 Copyright 2026 PFxamd. [Apache License 2.0](./LICENSE).
+
+## Automatic source versions
+
+The badge, `version.json`, and package manifests share one Git-derived version. Run `node .pfx/release.mjs --sync` before a local build. Full Git history is required. Rebuilding the same source keeps the same number; metadata-only bot commits do not advance it. See [.pfx/RELEASE.md](.pfx/RELEASE.md).
